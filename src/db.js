@@ -4,20 +4,19 @@ const fs = require("fs");
 const path = require("path");
 const { DATABASE_URL, DB_USER, DB_PASSWORD, DB_HOST, DB_NAME} = process.env;
 
-const sequelize = new Sequelize(
-  DATABASE_URL,
-  //`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-  {
-    logging: false,
-    native: false,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
+const sequelize = new Sequelize(DATABASE_URL, {
+  logging: false,
+  native: false,
+  dialect: "postgres",
+  dialectOptions: process.env.DATABASE_URL.includes("render.com")
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
       }
-    },
-  }
-);
+    : {},
+});
 
 const basename = path.basename(__filename);
 
