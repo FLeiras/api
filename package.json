@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "test": "mocha -w ./tests/**/*.spec.js"
+  "start": "node .",
+  "migrate": "npx sequelize-cli db:migrate",
+  "seed": "npx sequelize-cli db:seed:all",
+  "deploy": "npm run migrate && npm run seed && npm start"
   },
   "author": "Henry",
   "license": "ISC",
